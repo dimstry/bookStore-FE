@@ -1,8 +1,12 @@
 import React from "react";
 
-export default function TableBuku({ showEdit }) {
-  function editData() {
-    showEdit();
+export default function TableBuku({ showEdit, books, requestDelete }) {
+  function editData(book) {
+    showEdit(book);
+  }
+
+  function deleteData(book) {
+    requestDelete(book);
   }
 
   return (
@@ -19,20 +23,29 @@ export default function TableBuku({ showEdit }) {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Belajar React</td>
-              <td>Dimas</td>
-              <td className="text-center">
-                <button
-                  className="btn btn-sm btn-warning text-white mx-2"
-                  onClick={() => editData()}
-                >
-                  Edit
-                </button>
-                <button className="btn btn-sm btn-danger mx-2">Hapus</button>
-              </td>
-            </tr>
+            {books.map((book, i) => {
+              return (
+                <tr key={i}>
+                  <td>{i + 1}</td>
+                  <td>{book.judul}</td>
+                  <td>{book.pengarang}</td>
+                  <td className="text-center">
+                    <button
+                      className="btn btn-sm btn-warning text-white mx-2"
+                      onClick={() => editData(book)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn btn-sm btn-danger mx-2"
+                      onClick={() => deleteData(book)}
+                    >
+                      Hapus
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
